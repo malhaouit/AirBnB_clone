@@ -5,6 +5,7 @@ Current file: console.py
 """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -35,15 +36,18 @@ class HBNBCommand(cmd.Cmd):
         Usage:
             $ create BaseModel"""
 
-        if args == 'BaseModel':
-            new_bm = BaseModel()
-            storage.new(new_bm)
-            storage.save()
-            print('{}'.format(new_bm.id))
-        elif args == '':
+        if args == '':
             print('** class name missing **')
-        elif args != 'BaseModel':
+        elif args != 'BaseModel' and args != 'User':
             print("** class doesn't exist **")
+        else:
+            if args == 'BaseModel':
+                new_instance = BaseModel()
+            elif args == 'User':
+                new_instance = User()
+            storage.new(new_instance)
+            storage.save()
+            print('{}'.format(new_instance.id))
 
     def do_show(self, args):
         """Prints the string representation of an instance based on the class
@@ -56,12 +60,12 @@ class HBNBCommand(cmd.Cmd):
         if len(arguments) == 0:
             print('** class name missing **')
         elif len(arguments) == 1:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 print('** instance id missing **')
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 2:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         print(str(value))
@@ -78,11 +82,21 @@ class HBNBCommand(cmd.Cmd):
             $ all BaseModel or $ all"""
 
         str_objs_list = []
-        if args == '' or args == 'BaseModel':
-            storage.reload()
-            objects_dict = storage.all()
+        storage.reload()
+        objects_dict = storage.all()
+        if args == '':
             for key, value in objects_dict.items():
                 str_objs_list.append(str(value))
+            print(str_objs_list)
+        elif args == 'BaseModel':
+            for key, value in objects_dict.items():
+                if value.to_dict()['__class__'] == 'BaseModel':
+                    str_objs_list.append(str(value))
+            print(str_objs_list)
+        elif args == 'User':
+            for key, value in objects_dict.items():
+                if value.to_dict()['__class__'] == 'User':
+                    str_objs_list.append(str(value))
             print(str_objs_list)
         else:
             print("** class doesn't exist **")
@@ -99,12 +113,12 @@ class HBNBCommand(cmd.Cmd):
         if len(arguments) == 0:
             print('** class name missing **')
         elif len(arguments) == 1:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 print('** instance id missing **')
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 2:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         del objects_dict[key]
@@ -128,22 +142,22 @@ class HBNBCommand(cmd.Cmd):
         if len(arguments) == 0:
             print('** class name missing **')
         elif len(arguments) == 1:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 print('** instance id missing **')
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 2:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         print("** attribute name missing **")
                         break
-                    else:
-                        print("** no instance found **")
+                else:
+                    print("** no instance found **")
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 3:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         print("** value missing **")
@@ -153,9 +167,11 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 4:
-            if arguments[0] == 'BaseModel':
+            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
+                        if value.to_dict()['__class__'] != arguments[0]:
+                            continue
                         if arguments[2] not in [
                                 'id', 'created_at', 'updated_at']:
                             attr_value = arguments[3].strip('"')
