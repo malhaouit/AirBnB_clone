@@ -5,6 +5,7 @@ Current file: file_storage.py
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -37,3 +38,5 @@ class FileStorage:
             for key, value in dict_objs.items():
                 if value['__class__'] == 'BaseModel':
                     self.__objects[key] = BaseModel(**value)
+                elif value['__class__'] == 'User':
+                    self.__objects[key] = User(**value)
