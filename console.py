@@ -6,6 +6,11 @@ Current file: console.py
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 
 
@@ -38,34 +43,48 @@ class HBNBCommand(cmd.Cmd):
 
         if args == '':
             print('** class name missing **')
-        elif args != 'BaseModel' and args != 'User':
-            print("** class doesn't exist **")
+        elif args == 'BaseModel':
+            new_instance = BaseModel()
+        elif args == 'User':
+            new_instance = User()
+        elif args == 'State':
+            new_instance = State()
+        elif args == 'City':
+            new_instance = City()
+        elif args == 'Amenity':
+            new_instance = Amenity()
+        elif args == 'Place':
+            new_instance = Place()
+        elif args == 'Review':
+            new_instance = Review()
         else:
-            if args == 'BaseModel':
-                new_instance = BaseModel()
-            elif args == 'User':
-                new_instance = User()
-            storage.new(new_instance)
-            storage.save()
-            print('{}'.format(new_instance.id))
+            print("** class doesn't exist **")
+            return
+
+        storage.new(new_instance)
+        storage.save()
+        print('{}'.format(new_instance.id))
 
     def do_show(self, args):
         """Prints the string representation of an instance based on the class
         name and `id`
         Usage:
             $ show BaseModel 1234-1234-1234"""
-        storage.reload()
+
         objects_dict = storage.all()
         arguments = args.split()
+
         if len(arguments) == 0:
             print('** class name missing **')
         elif len(arguments) == 1:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 print('** instance id missing **')
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 2:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         print(str(value))
@@ -82,20 +101,17 @@ class HBNBCommand(cmd.Cmd):
             $ all BaseModel or $ all"""
 
         str_objs_list = []
-        storage.reload()
         objects_dict = storage.all()
+
         if args == '':
             for key, value in objects_dict.items():
                 str_objs_list.append(str(value))
             print(str_objs_list)
-        elif args == 'BaseModel':
+        elif args in [
+                'BaseModel', 'User', 'State', 'City',
+                'Amenity', 'Place', 'Review']:
             for key, value in objects_dict.items():
-                if value.to_dict()['__class__'] == 'BaseModel':
-                    str_objs_list.append(str(value))
-            print(str_objs_list)
-        elif args == 'User':
-            for key, value in objects_dict.items():
-                if value.to_dict()['__class__'] == 'User':
+                if value.to_dict()['__class__'] == args:
                     str_objs_list.append(str(value))
             print(str_objs_list)
         else:
@@ -107,18 +123,20 @@ class HBNBCommand(cmd.Cmd):
         Usage:
             $ destroy BaseModel 1234-1234-1234"""
 
-        storage.reload()
         objects_dict = storage.all()
         arguments = args.split()
+
         if len(arguments) == 0:
             print('** class name missing **')
         elif len(arguments) == 1:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 print('** instance id missing **')
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 2:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         del objects_dict[key]
@@ -135,19 +153,20 @@ class HBNBCommand(cmd.Cmd):
         Usage:
             $ update BaseModel 1234-1234-1234 email 'aibnb@mail.com'"""
 
-        storage.reload()
         objects_dict = storage.all()
         arguments = args.split()
 
         if len(arguments) == 0:
             print('** class name missing **')
         elif len(arguments) == 1:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 print('** instance id missing **')
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 2:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         print("** attribute name missing **")
@@ -157,7 +176,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 3:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         print("** value missing **")
@@ -167,7 +187,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
         elif len(arguments) == 4:
-            if arguments[0] == 'BaseModel' or arguments[0] == 'User':
+            if arguments[0] in ['BaseModel', 'User', 'State', 'City',
+                                'Amenity', 'Place', 'Review']:
                 for key, value in objects_dict.items():
                     if value.id == arguments[1]:
                         if value.to_dict()['__class__'] != arguments[0]:
