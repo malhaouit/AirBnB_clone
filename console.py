@@ -43,6 +43,7 @@ class HBNBCommand(cmd.Cmd):
 
         if args == '':
             print('** class name missing **')
+            return
         elif args == 'BaseModel':
             new_instance = BaseModel()
         elif args == 'User':

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """This module includes a number of tests on the BaseModel functionalities
 to ensure that everything still works as expected"""
 import unittest
