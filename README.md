@@ -30,7 +30,7 @@ The name of the file that starts the command line interpreter is [console.py](ht
 
 In your terminal where the file `console.py` exist tap the command `./console.py` to start the program.  
 
-The first thing you will see is a prompt **(hbnb)** waiting the user to enter a command. In the section below you will some uses and examples.
+The first thing you will see is a prompt **(hbnb)** waiting the user to enter a command. In the section below you will find some uses and examples.
 
 ### How to use it?
 
