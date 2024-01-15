@@ -46,7 +46,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue("'my_number': 89" in bm_str)
 
     def test_save_method(self):
-        """ """
+        """Check if the date is updated after calling save method"""
         first_updated_at = self.bm.updated_at
         self.bm.save()
         self.assertNotEqual(self.bm.updated_at, first_updated_at)
