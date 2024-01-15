@@ -28,7 +28,7 @@ The final product is a complete web application that includes:
 
 The name of the file that starts the command line interpreter is [console.py](https://github.com/malhaouit/AirBnB_clone/blob/master/console.py).  
 
-In your terminal where the file `console.py` exist use the command `./console` to start the program.  
+In your terminal where the file `console.py` exist tap the command `./console.py` to start the program.  
 
 The first thing you will see is a prompt **(hbnb)** waiting the user to enter a command. In the section below you will some uses and examples.
 
