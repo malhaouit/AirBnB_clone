@@ -50,6 +50,13 @@ class HBNBCommand(cmd.Cmd):
             elif method.startswith("destroy(") and method.endswith(")"):
                 id = method[8:-1].strip('"')
                 self.do_destroy("{} {}".format(class_name, id))
+            elif method.startswith("update(") and method.endswith(")"):
+                remaining_args = method[7:-1].split(", ")
+                id = remaining_args[0].strip('"')
+                attr_name = remaining_args[1].strip('"')
+                attr_value = remaining_args[2]
+                self.do_update("{} {} {} {}".format(
+                    class_name, id, attr_name, attr_value))
 
     def do_count(self, class_name):
         """Retrieves the number of instances of a class"""
