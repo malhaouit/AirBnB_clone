@@ -35,6 +35,31 @@ class HBNBCommand(cmd.Cmd):
         with empty line as input (args)"""
         pass
 
+    def default(self, args):
+        """Method called for default interpretation when a
+        command prefix is not recognized."""
+        if len(args.split(".")) == 2:
+            class_name, method = args.split(".")
+            if method == "all()":
+                self.do_all(class_name)
+            elif method == "count()":
+                self.do_count(class_name)
+            elif method.startswith("show(") and method.endswith(")"):
+                id = method[5:-1].strip('"')
+                self.do_show("{} {}".format(class_name, id))
+            elif method.startswith("destroy(") and method.endswith(")"):
+                id = method[8:-1].strip('"')
+                self.do_destroy("{} {}".format(class_name, id))
+
+    def do_count(self, class_name):
+        """Retrieves the number of instances of a class"""
+        count = 0
+        objects_dict = storage.all()
+        for key, value in objects_dict.items():
+            if value.__class__.__name__ == class_name:
+                count += 1
+        print(count)
+
     def do_create(self, args):
         """Creates a new instance of BaseModel, saves it (to the JSON file)
         and prints the `id`
