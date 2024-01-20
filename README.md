@@ -2,7 +2,7 @@
 
 ## Introduction 
 
-The goal of this project is to simulate [AirBnB website](https://www.airbnb.fr/). We will deploy on our server a simple copy of it. ibtissam 
+The goal of this project is to simulate [AirBnB website](https://www.airbnb.fr/). We will deploy on our server a simple copy of it. 
 
 **First, what is AirBnB platform?**  
 Is a popular online marketplace and hospitality service that allows people to rent or lease short-term lodging, including vacation rentals, apartment rentals, homestays, hostel beds, or hotel rooms (check the link above).  
