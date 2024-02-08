@@ -1,4 +1,12 @@
+html, body {
+	margin: 0;
+}
+
 .places article {
+	display: inline-block;
+	margin: 15px; 
+	font-size: 16px;
+	height: 350px; 
 	position: relative;
 }
 
@@ -14,7 +22,7 @@
 	border-radius: 50%;
 	min-width: 60px;
 	height: 60px;
-	font-size: 30px;
+	font-size: 20px;
 	position: absolute;
 	top: 15px;
 	right: 15px;
@@ -25,46 +33,53 @@
 	border-top: 1px solid #DDDDDD;
 	border-bottom: 1px solid #DDDDDD;
 	margin-top: 30px;
-/*	align verically */
 }
 
 .places .information .max_guest,
 .places .information .number_rooms,
- .places .information .number_bathrooms {
+.places .information .number_bathrooms {
 	width: 100px;	
 }
 
+.places .information .max_guest p,
+.places .information .number_rooms p,
+.places .information .number_bathrooms p {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+.places .information .max_guest > p::before,
+.places .information .number_rooms > p::before,
+.places .information .number_bathrooms > p::before {
+	content: "";
+	display: block;
+	margin: 0;
+	width: 50px;
+	height: 50px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 .places .information .max_guest > p::before {
-    content: "";
-    display: block;
-    margin: 0;
-    width: 50px;
-    height: 50px;
-    background-image: url('../images/icon_group.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+	background-image: url('../images/icon_group.png');
 }
 
 .places .information .number_rooms > p::before {
-    content: "";
-    display: block;
-    margin: 0;
-    width: 50px;
-    height: 50px;
-    background-image: url('../images/icon_bed.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+	background-image: url('../images/icon_bed.png');
 }
 
 .places .information .number_bathrooms > p::before {
-    content: "";
-    display: block;
-    margin: 0;
-    width: 50px;
-    height: 50px;
-    background-image: url('../images/icon_bath.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+	background-image: url('../images/icon_bath.png');
+}
+
+.places .user {
+	display: flex;
+	justify-content: left;
+	margin-top: 20px;
 }
 
 .places .description {
@@ -72,7 +87,8 @@
 	margin-top: 10px;
 }
 
-.places .user {
-	text-align: left;
-	margin-top: 10px;
+.places {
+	text-align: center;
+	font-size: 0;
+	margin-bottom: 90px;
 }
